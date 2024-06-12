@@ -1,5 +1,5 @@
 /*
- * motor_driver.c
+ * balance_motor_driver.c
  *
  *  Created on: Apr 25, 2024
  *      Author: jwald
@@ -31,7 +31,7 @@ void set_duty_cycle(motor *p_mot, int32_t duty){
 		HAL_GPIO_WritePin(p_mot->GPIO_Port, p_mot->GPIO_Pin_Neg, GPIO_PIN_SET); // set negative pin to spin in other direction
 	}
 	if (duty == 0){
-		__HAL_TIM_SET_COMPARE(p_mot->tim,p_mot->pwm,0); // turn of motor pwm
+		__HAL_TIM_SET_COMPARE(p_mot->tim,p_mot->pwm,0); // turn off motor pwm
 		HAL_GPIO_WritePin(p_mot->GPIO_Port, p_mot->GPIO_Pin_Pos, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(p_mot->GPIO_Port, p_mot->GPIO_Pin_Neg, GPIO_PIN_SET);
 	}

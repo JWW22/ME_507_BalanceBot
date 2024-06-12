@@ -253,6 +253,8 @@ double PID_GetKp(PID_TypeDef *uPID);
 double PID_GetKi(PID_TypeDef *uPID);
 double PID_GetKd(PID_TypeDef *uPID);
 
+void PID_Change_Setpoint(PID_TypeDef *uPID, double *new_set);
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ End of the program ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 #endif /* __PID_H_ */

@@ -309,3 +309,10 @@ double PID_GetKd(PID_TypeDef *uPID)
 {
 	return uPID->DispKd;
 }
+
+/*			Change Set_point			*/
+void PID_Change_Setpoint(PID_TypeDef *uPID, double *new_set){
+	uPID->MySetpoint = new_set;
+}
+
+

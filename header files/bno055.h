@@ -5,7 +5,6 @@
   extern "C" {
 #endif
 // #define FREERTOS_ENABLED true
-
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
