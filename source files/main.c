@@ -56,8 +56,6 @@ PID_TypeDef APID; //Angle PID Controller
 
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c1;
-DMA_HandleTypeDef hdma_i2c1_rx;
-DMA_HandleTypeDef hdma_i2c1_tx;
 
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
@@ -83,7 +81,7 @@ UART_HandleTypeDef huart2;
 	char OutBuf[100] = {0};
 	double Angle = 0;
 	double PIDOut = 0;
-	double AngleSetpoint = 90;
+	double AngleSetpoint = 97;
 	double MAX_PID = 100;
 	double MIN_PID = -100;
 	int32_t pwm_value;
@@ -117,11 +115,10 @@ UART_HandleTypeDef huart2;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_DMA_Init(void);
-static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_USART1_UART_Init(void);
 static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -162,11 +159,10 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
-  MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   MX_TIM2_Init();
+  MX_USART1_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 
@@ -194,9 +190,9 @@ int main(void)
 
   //Set up PID Controller:
   //Set_point for PID controller is z = 90degrees
-  PID(&APID,&Angle,&PIDOut,&AngleSetpoint, 5, 0, 0, _PID_P_ON_E, _PID_CD_DIRECT);
+  PID(&APID,&Angle,&PIDOut,&AngleSetpoint, 12, 0, 0.1, _PID_P_ON_E, _PID_CD_DIRECT);
   PID_SetMode(&APID, _PID_MODE_AUTOMATIC);
-  PID_SetSampleTime(&APID, 50);
+  PID_SetSampleTime(&APID, 70);
   PID_SetOutputLimits(&APID, MIN_PID, MAX_PID);
 
   //motor stuff:
@@ -553,7 +549,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
+  huart2.Init.BaudRate = 9600;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
@@ -567,25 +563,6 @@ static void MX_USART2_UART_Init(void)
   /* USER CODE BEGIN USART2_Init 2 */
 
   /* USER CODE END USART2_Init 2 */
-
-}
-
-/**
-  * Enable DMA controller clock
-  */
-static void MX_DMA_Init(void)
-{
-
-  /* DMA controller clock enable */
-  __HAL_RCC_DMA1_CLK_ENABLE();
-
-  /* DMA interrupt init */
-  /* DMA1_Stream0_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
-  /* DMA1_Stream1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
 
 }
 
