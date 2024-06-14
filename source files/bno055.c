@@ -1,3 +1,15 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : bno055.c
+  * @brief          : This driver is meant to control the IMU.
+  ******************************************************************************
+  * @author Johnathan Waldmire, Peter Tomson
+  * @date   June 14, 2024
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
 #include "bno055.h"
 #include <string.h>
 

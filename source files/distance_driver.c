@@ -1,25 +1,42 @@
-/*
- * distance_driver.c
- *
- * This driver is meant to be used with the Adafruit US100 ultrasonic distance sensor
- *
- *  Created on: Jun 3, 2024
- *      Author: jwald
- */
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : distance_driver.c
+  * @brief          : This driver is meant to be used with the Adafruit US100 ultra-sonic distance sensor.
+  ******************************************************************************
+  * @author Johnathan Waldmire, Peter Tomson
+  * @date   June 3, 2024
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+
 #include <distance_driver.h>
 #include <stdint.h>
 
-//function to enable the ultrasonic distance sensor
+/**
+ * @brief  This function enables the US100 sensor.
+ * @retval None
+ * @param[in] Distance sensor Pointer
+ */
 void enable_distance(distance *p_dis){
 	HAL_UART_Init(p_dis->uart);
 }
 
-//function to disable the ultrasonic distance sensor
+/**
+ * @brief  This function disables the US100 sensor.
+ * @retval None
+ * @param[in] Distance sensor Pointer
+ */
 void disable_distance(distance *p_dis){
 	HAL_UART_DeInit(p_dis->uart);
 }
 
-// function that returns the distance value read from the sensor
+/**
+ * @brief  This function returns the distance value read from the sensor.
+ * @retval The distance in millimeters
+ * @param[in] Distance sensor Pointer
+ */
 uint16_t read_distance(distance *p_dis){
 
 	HAL_UART_Transmit(p_dis->uart, &p_dis->command, 1,1000);
@@ -33,6 +50,6 @@ uint16_t read_distance(distance *p_dis){
 	// if the sensor data was not read correctly, raise the error flag for the while loop to process
 	} else {
 		p_dis->error = 1;
-		return 0; // return nothing if the read didnt work
+		return 0; // return nothing if the read didn't work
 	}
 }

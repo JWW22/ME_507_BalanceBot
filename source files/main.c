@@ -2,7 +2,7 @@
 /**
   ******************************************************************************
   * @file           : main.c
-  * @brief          : Main program body
+  * @brief          : This is the main program for our ME 507 (Somewhat) Balance Bot
   ******************************************************************************
   * @attention
   *
@@ -13,21 +13,24 @@
   * in the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
+  * @author Johnathan Waldmire, Peter Tomson
+  * @date   June 14, 2024
+  *
   ******************************************************************************
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <rc_driver.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-// Various Drivers that were made:
+//Various Drivers that were made:
+
 #include "balance_motor_driver.h"
 #include "bno055_stm32.h"
 #include "distance_driver.h"
 #include "pid.h"
-#include "RC_driver.h"
-// Necessities:
 #include "stm32f4xx.h"
 #include <stdio.h>
 #include <string.h>
@@ -37,15 +40,16 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
-PID_TypeDef APID; //Angle PID Controller
+PID_TypeDef APID; ///< Angle PID Controller
 
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
-#define PWM_MAX 4000
-#define PWM_MIN -4000
+// Values for motor pwm
+#define PWM_MAX 4000 ///< Maximum motor PWM
+#define PWM_MIN -4000 ///< Minimum motor PWM
 
 /* USER CODE END PD */
 
@@ -56,6 +60,8 @@ PID_TypeDef APID; //Angle PID Controller
 
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c1;
+DMA_HandleTypeDef hdma_i2c1_rx;
+DMA_HandleTypeDef hdma_i2c1_tx;
 
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
@@ -64,61 +70,43 @@ UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-	//FOR IMU:
-	//char euler_buff[100] = {0};
-	//char quaternion_buff[100] = {0};
-	char buf[100] = {0};
 
 	//For RC Driver:
-	int32_t on = 0;
+	int32_t on = 0; ///< Tests if the controller is reading a PWM signal.
+	/** This is the RC object used for the RC receiver. The Receiver was used as a kill switch for this project. The trigger must be held in order for the motors to spin.
+	 */
 	RC_Signal RC = {
 				.tim = &htim3,
 				.ch1 = TIM_CHANNEL_1,
 				.ch2 = TIM_CHANNEL_2,
 	};
 
-	//For PID Controller:
-	char OutBuf[100] = {0};
-	double Angle = 0;
-	double PIDOut = 0;
-	double AngleSetpoint = 97;
-	double MAX_PID = 100;
-	double MIN_PID = -100;
-	int32_t pwm_value;
+	// For PID Controller:
+	char OutBuf[100] = {0};  ///< Output array for the PID controller
+	double Angle = 0; ///< Angle read from the IMU
+	double PIDOut = 0; ///< Actual output for the PID controller
+	double AngleSetpoint = 90; ///< Set point for the PID controller
+	double MAX_PID = 100; ///< Maximum value for PID controller
+	double MIN_PID = -100; ///< Minimum value for PID controller
+	int32_t pwm_value; ///< Converted PID value -> PWM value
 
-/*
-	//For Motor Driver (NEW)
-	  motor motor1 = {
-	    	.tim = &htim2,
-			.GPIO_Port = GPIOA,
-			.GPIO_Pin_Pos = GPIO_PIN_6,
-			.GPIO_Pin_Neg = GPIO_PIN_7,
-			.pwm = TIM_CHANNEL_1,
-	    };
-	  motor motor2 = {
-	    	.tim = &htim2,
-	    	.GPIO_Port = GPIOB,
-	  		.GPIO_Pin_Pos = GPIO_PIN_0,
-			.GPIO_Pin_Neg = GPIO_PIN_1,
-	  		.pwm = TIM_CHANNEL_3,
-	};
-*/
 
 	//For Ultra-sonic Sensor:
-	char dist[50] = {0};
-	uint8_t buffer[2] = {0};
-	uint8_t read = 0x55;
-	uint16_t distance;
+	char dist[50] = {0}; ///< Array for the distance sensor
+	uint8_t buffer[2] = {0}; ///< Buffer to concatenate the two bytes of data into one
+	uint8_t read = 0x55; ///< Value to send to the sensor in order to read data from the sensor.
+	uint16_t distance; ///< Converted distance in millimeters
 
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
+static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_TIM2_Init(void);
-static void MX_USART1_UART_Init(void);
 static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -131,8 +119,7 @@ static void MX_TIM3_Init(void);
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
+  * @details  This is the main loop for the balance-bot. It can be thought to run in three states: Initialization, Read from pitch the IMU, Send pitch to the PID Controller, and Send a PWM signal to the motors.
   */
 int main(void)
 {
@@ -159,20 +146,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
+  MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   MX_TIM2_Init();
-  MX_USART1_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-
-/*
-  //Initialize Motors:
-  enable_motor(&motor1);
-  enable_motor(&motor2);
-  set_duty_cycle(&motor1,0);
-  set_duty_cycle(&motor2,0);
-*/
 
   //Start IMU:
   bno055_reset();
@@ -190,12 +170,12 @@ int main(void)
 
   //Set up PID Controller:
   //Set_point for PID controller is z = 90degrees
-  PID(&APID,&Angle,&PIDOut,&AngleSetpoint, 12, 0, 0.1, _PID_P_ON_E, _PID_CD_DIRECT);
+  PID(&APID,&Angle,&PIDOut,&AngleSetpoint, 5, 0, 0, _PID_P_ON_E, _PID_CD_DIRECT);
   PID_SetMode(&APID, _PID_MODE_AUTOMATIC);
-  PID_SetSampleTime(&APID, 70);
+  PID_SetSampleTime(&APID, 50);
   PID_SetOutputLimits(&APID, MIN_PID, MAX_PID);
 
-  //motor stuff:
+  //Motor Stuff:
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_1,0);
   HAL_GPIO_WritePin (GPIOA,GPIO_PIN_6,GPIO_PIN_SET);
@@ -220,48 +200,30 @@ int main(void)
 	bno055_vector_t v = bno055_getVectorEuler();
 	Angle = (double)v.z;
   //Converts angle we want into a double for PID
-/*
-	sprintf(buf, "Angle: %.2f\r\n", Angle);
-	HAL_UART_Transmit(&huart2, (uint8_t*)buf, strlen(buf), HAL_MAX_DELAY);
-	HAL_Delay(100);
-*/
-	//Initialize US:
-/*
+
+	//Initialize Ultra-Sonic Sensor:
 	HAL_UART_Transmit(&huart1, &read, 1,1000);
 	if (HAL_UART_Receive(&huart1, buffer, 2, 1000) == HAL_OK){
 		distance = (buffer[0] << 8) | buffer[1];
 	}
-*/
+
 	//Trigger Data:
-	distance = 1000;
-	//on = (RC_Pulse(&RC)-1500)*9;
-	on = 4000;
+	on = (RC_Pulse(&RC)-1500)*9;
 
 	if(on >=3000){ //Trigger is held down.
 		if(distance <= 100){
-			//Moves the balance-bot backwards:
+			//Moves the balance-bot backwards.
 			PID_Change_Setpoint(&APID, (double*)85);
 			PID_Compute(&APID);
-			//Used for debugging:
-//			sprintf(OutBuf,"Angle %3.2f : %u\r\n", Angle, (uint16_t)PIDOut);
-//			HAL_UART_Transmit(&huart2, (uint8_t*)OutBuf, strlen(OutBuf), HAL_MAX_DELAY);
-//			HAL_Delay(100);
 		} else{
 			PID_Compute(&APID);
-			//Used for debugging:
-//			sprintf(OutBuf,"Angle %3.2f : %u\r\n", Angle, (uint16_t)PIDOut);
-//			HAL_UART_Transmit(&huart2, (uint8_t*)OutBuf, strlen(OutBuf), HAL_MAX_DELAY);
-//			HAL_Delay(100);
 		}
 
 
 		//Conversion from PID to PWM:
 		pwm_value = (int32_t)((PIDOut / MAX_PID) * PWM_MAX);
-/*
-		set_duty_cycle(&motor1, pwm_value);
-		set_duty_cycle(&motor2, pwm_value);
-*/
-		if(pwm_value <= 0){
+
+		if(pwm_value <= 0){ //Sets PWM duty cycle and direction to proper motors.
 			__HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_1,-pwm_value);
 			__HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_3,-pwm_value);
 			HAL_GPIO_WritePin (GPIOA,GPIO_PIN_6,GPIO_PIN_SET);
@@ -279,26 +241,10 @@ int main(void)
 
 		}
 
-
-
-
-		/* Prints all IMU DATA:
-		sprintf(euler_buff, "Heading: %.2f Roll: %.2f Pitch: %.2f\r\n", v.x, v.y, v.z);
-		HAL_UART_Transmit(&huart2, (uint8_t*)euler_buff, strlen(euler_buff), HAL_MAX_DELAY);
-		HAL_Delay(100);
-
-		v = bno055_getVectorQuaternion();
-		//sprintf(quaternion_buff, "W: %.2f X: %.2f Y: %.2f Z: %.2f\r\n", v.w, v.x, v.y, v.z);
-		//HAL_UART_Transmit(&huart2, (uint8_t*)quaternion_buff, strlen(quaternion_buff), HAL_MAX_DELAY);
-		HAL_Delay(500);
-		*/
-	}else{
+	}else{ //If the trigger stops getting held down, motors will stop moving.
 		__HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_1,0);
 		__HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_3,0);
 	}
-
-
-
 
   }
   /* USER CODE END 3 */
@@ -351,7 +297,6 @@ void SystemClock_Config(void)
 
 /**
   * @brief I2C1 Initialization Function
-  * @param None
   * @retval None
   */
 static void MX_I2C1_Init(void)
@@ -385,7 +330,6 @@ static void MX_I2C1_Init(void)
 
 /**
   * @brief TIM2 Initialization Function
-  * @param None
   * @retval None
   */
 static void MX_TIM2_Init(void)
@@ -438,7 +382,6 @@ static void MX_TIM2_Init(void)
 
 /**
   * @brief TIM3 Initialization Function
-  * @param None
   * @retval None
   */
 static void MX_TIM3_Init(void)
@@ -549,7 +492,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 9600;
+  huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
@@ -563,6 +506,25 @@ static void MX_USART2_UART_Init(void)
   /* USER CODE BEGIN USART2_Init 2 */
 
   /* USER CODE END USART2_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Stream0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
+  /* DMA1_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
 
 }
 
@@ -607,9 +569,15 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  This function captures the receiver PWM signal.
+  * @retval None
+  * @param[in] Timer Typedef
+  *
+  */
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
-	//!Runs our callback function in RC_Driver which essentially captures the pulse width of each channel
+	//!Runs our callback function in RC_Driver which essentially captures the pulse width of each channel.
 	RC_callback(&RC);
 
 }

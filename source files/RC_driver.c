@@ -1,20 +1,24 @@
-
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file            RC_driver.c
-  * @brief           Class that can be used to read a PWM signal from an RC controller
+  * @file           : rc_driver.c
+  * @brief          : This is a class that can be used to read a PWM signal from an RC controller.
+  ******************************************************************************
+  * @author Johnathan Waldmire, Peter Tomson
+  * @date   May 17, 2024
   *
-  *                  Created on: May 17, 2024
-  *                  Author: Johnathan Waldmire
   ******************************************************************************
   */
 /* USER CODE END Header */
 
-#include <RC_driver.h>
+#include <rc_driver.h>
 #include <stdint.h>
 
-//!function that measures the active pulse width of the RC signal in microseconds
+/**
+ * @brief  This function measures the active pulse width of the RC signal in microseconds.
+ * @retval None
+ * @param[in] RC Receiver Pointer
+ */
 void RC_callback(RC_Signal *p_RC){
 	if (p_RC->tim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
 	{
@@ -26,7 +30,12 @@ void RC_callback(RC_Signal *p_RC){
 	}
 }
 
-//! function that saturates erroneous pulse width values then returns the pulse width in microseconds
+/**
+ * @brief  This function saturates erroneous pulse width values then returns the pulse width in microseconds.
+ * @retval PWM Value
+ * @param[in] RC Receiver Pointer
+ */
+
 uint32_t RC_Pulse(RC_Signal *p_RC){
 	if (p_RC->IC_PWM > 2000)
 	{
