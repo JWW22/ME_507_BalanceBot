@@ -1,0 +1,202 @@
+\doxysection{Core/\+Src/main.c File Reference}
+\hypertarget{main_8c}{}\label{main_8c}\index{Core/Src/main.c@{Core/Src/main.c}}
+
+
+\+: This is the main program for our ME 507 (Somewhat) Balance Bot  
+
+
+{\ttfamily \#include $<$rc\+\_\+driver.\+h$>$}\newline
+{\ttfamily \#include "{}main.\+h"{}}\newline
+{\ttfamily \#include "{}balance\+\_\+motor\+\_\+driver.\+h"{}}\newline
+{\ttfamily \#include "{}bno055\+\_\+stm32.\+h"{}}\newline
+{\ttfamily \#include "{}distance\+\_\+driver.\+h"{}}\newline
+{\ttfamily \#include "{}pid.\+h"{}}\newline
+{\ttfamily \#include "{}stm32f4xx.\+h"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{main_8c_a391fa1e490bd712720989b58fa0d9904}\label{main_8c_a391fa1e490bd712720989b58fa0d9904} 
+\#define {\bfseries PWM\+\_\+\+MAX}~4000
+\begin{DoxyCompactList}\small\item\em Maximum motor PWM. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_a6a06d5e0af804c23442d316bd0b873d6}\label{main_8c_a6a06d5e0af804c23442d316bd0b873d6} 
+\#define {\bfseries PWM\+\_\+\+MIN}~-\/4000
+\begin{DoxyCompactList}\small\item\em Minimum motor PWM. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config}} (void)
+\begin{DoxyCompactList}\small\item\em System Clock Configuration. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\item 
+void \mbox{\hyperlink{main_8c_a77a2401a35ddd9bd0b8fc28331b81381}{HAL\+\_\+\+TIM\+\_\+\+IC\+\_\+\+Capture\+Callback}} (TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}htim)
+\begin{DoxyCompactList}\small\item\em This function captures the receiver PWM signal. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a1730ffe1e560465665eb47d9264826f9}{Error\+\_\+\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em This function is executed in case of error occurrence. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{main_8c_a022b068921022f560a87073615e2a606}\label{main_8c_a022b068921022f560a87073615e2a606} 
+PID\+\_\+\+Type\+Def {\bfseries APID}
+\begin{DoxyCompactList}\small\item\em Angle PID Controller. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_af7b2c26e44dadaaa798a5c3d82914ba7}\label{main_8c_af7b2c26e44dadaaa798a5c3d82914ba7} 
+I2\+C\+\_\+\+Handle\+Type\+Def {\bfseries hi2c1}
+\item 
+\Hypertarget{main_8c_a9cf31216ab15c3f167902641b70c0f38}\label{main_8c_a9cf31216ab15c3f167902641b70c0f38} 
+DMA\+\_\+\+Handle\+Type\+Def {\bfseries hdma\+\_\+i2c1\+\_\+rx}
+\item 
+\Hypertarget{main_8c_ae4780ad74b8c24d6fffa8ec7fc8ea105}\label{main_8c_ae4780ad74b8c24d6fffa8ec7fc8ea105} 
+DMA\+\_\+\+Handle\+Type\+Def {\bfseries hdma\+\_\+i2c1\+\_\+tx}
+\item 
+\Hypertarget{main_8c_a2c80fd5510e2990a59a5c90d745c716c}\label{main_8c_a2c80fd5510e2990a59a5c90d745c716c} 
+TIM\+\_\+\+Handle\+Type\+Def {\bfseries htim2}
+\item 
+\Hypertarget{main_8c_aac3d2c59ee0e3bbae1b99529a154eb62}\label{main_8c_aac3d2c59ee0e3bbae1b99529a154eb62} 
+TIM\+\_\+\+Handle\+Type\+Def {\bfseries htim3}
+\item 
+\Hypertarget{main_8c_a2cf715bef37f7e8ef385a30974a5f0d5}\label{main_8c_a2cf715bef37f7e8ef385a30974a5f0d5} 
+UART\+\_\+\+Handle\+Type\+Def {\bfseries huart1}
+\item 
+\Hypertarget{main_8c_aa9479c261d65eecedd3d9582f7f0f89c}\label{main_8c_aa9479c261d65eecedd3d9582f7f0f89c} 
+UART\+\_\+\+Handle\+Type\+Def {\bfseries huart2}
+\item 
+\Hypertarget{main_8c_a90d25e740447282c3be94bd2f32f6c50}\label{main_8c_a90d25e740447282c3be94bd2f32f6c50} 
+int32\+\_\+t {\bfseries on} = 0
+\begin{DoxyCompactList}\small\item\em Tests if the controller is reading a PWM signal. \end{DoxyCompactList}\item 
+RC\+\_\+\+Signal \mbox{\hyperlink{main_8c_a1eac46702c054e129053ae4a2153e42c}{RC}}
+\item 
+\Hypertarget{main_8c_a0ff18966b32a757463125c24e6d70df4}\label{main_8c_a0ff18966b32a757463125c24e6d70df4} 
+char {\bfseries Out\+Buf} \mbox{[}100\mbox{]} = \{0\}
+\begin{DoxyCompactList}\small\item\em Output array for the PID controller. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_a8c10230001bab42de01beb2843f8c327}\label{main_8c_a8c10230001bab42de01beb2843f8c327} 
+double {\bfseries Angle} = 0
+\begin{DoxyCompactList}\small\item\em Angle read from the IMU. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_a74b83a669114ac0b8ab0d6e8b7a0fc67}\label{main_8c_a74b83a669114ac0b8ab0d6e8b7a0fc67} 
+double {\bfseries PIDOut} = 0
+\begin{DoxyCompactList}\small\item\em Actual output for the PID controller. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_ae6f8ea9f985b08fa972648b6e1927e79}\label{main_8c_ae6f8ea9f985b08fa972648b6e1927e79} 
+double {\bfseries Angle\+Setpoint} = 90
+\begin{DoxyCompactList}\small\item\em Set point for the PID controller. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_a5a7e86a7084350c8a71abb3c8670e25d}\label{main_8c_a5a7e86a7084350c8a71abb3c8670e25d} 
+double {\bfseries MAX\+\_\+\+PID} = 100
+\begin{DoxyCompactList}\small\item\em Maximum value for PID controller. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_a3d2967493b58e20195da8e170831cd24}\label{main_8c_a3d2967493b58e20195da8e170831cd24} 
+double {\bfseries MIN\+\_\+\+PID} = -\/100
+\begin{DoxyCompactList}\small\item\em Minimum value for PID controller. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_a3268ea4e370880e1a5b178095ed4a867}\label{main_8c_a3268ea4e370880e1a5b178095ed4a867} 
+int32\+\_\+t {\bfseries pwm\+\_\+value}
+\begin{DoxyCompactList}\small\item\em Converted PID value -\/\texorpdfstring{$>$}{>} PWM value. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_a1d23d983139781bdb6907432d10b837b}\label{main_8c_a1d23d983139781bdb6907432d10b837b} 
+char {\bfseries dist} \mbox{[}50\mbox{]} = \{0\}
+\begin{DoxyCompactList}\small\item\em Array for the distance sensor. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_a4d5b11991a23af82ab0602b207b72387}\label{main_8c_a4d5b11991a23af82ab0602b207b72387} 
+uint8\+\_\+t {\bfseries buffer} \mbox{[}2\mbox{]} = \{0\}
+\begin{DoxyCompactList}\small\item\em Buffer to concatenate the two bytes of data into one. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_ad99a3f990d972bf0b87f25fd507eb599}\label{main_8c_ad99a3f990d972bf0b87f25fd507eb599} 
+uint8\+\_\+t {\bfseries read} = 0x55
+\begin{DoxyCompactList}\small\item\em Value to send to the sensor in order to read data from the sensor. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_a7ae9d3ad463ec7a0eb38ee23a15c51e7}\label{main_8c_a7ae9d3ad463ec7a0eb38ee23a15c51e7} 
+uint16\+\_\+t {\bfseries distance}
+\begin{DoxyCompactList}\small\item\em Converted distance in millimeters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\+: This is the main program for our ME 507 (Somewhat) Balance Bot 
+
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+Copyright (c) 2024 STMicroelectronics. All rights reserved.
+
+This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-\/\+IS.
+
+\begin{DoxyAuthor}{Author}
+Johnathan Waldmire, Peter Tomson 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+June 14, 2024 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8c_a1730ffe1e560465665eb47d9264826f9}\index{main.c@{main.c}!Error\_Handler@{Error\_Handler}}
+\index{Error\_Handler@{Error\_Handler}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{Error\_Handler()}{Error\_Handler()}}
+{\footnotesize\ttfamily \label{main_8c_a1730ffe1e560465665eb47d9264826f9} 
+void Error\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+This function is executed in case of error occurrence. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_a77a2401a35ddd9bd0b8fc28331b81381}\index{main.c@{main.c}!HAL\_TIM\_IC\_CaptureCallback@{HAL\_TIM\_IC\_CaptureCallback}}
+\index{HAL\_TIM\_IC\_CaptureCallback@{HAL\_TIM\_IC\_CaptureCallback}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_TIM\_IC\_CaptureCallback()}{HAL\_TIM\_IC\_CaptureCallback()}}
+{\footnotesize\ttfamily \label{main_8c_a77a2401a35ddd9bd0b8fc28331b81381} 
+void HAL\+\_\+\+TIM\+\_\+\+IC\+\_\+\+Capture\+Callback (\begin{DoxyParamCaption}\item[{TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}}]{htim}{}\end{DoxyParamCaption})}
+
+
+
+This function captures the receiver PWM signal. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Timer} & Typedef \\
+\hline
+\end{DoxyParams}
+Runs our callback function in RC\+\_\+\+Driver which essentially captures the pulse width of each channel.\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{main_8c_a840291bc02cba5474a4cb46a9b9566fe} 
+int main (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+This is the main loop for the balance-\/bot. It can be thought to run in three states\+: Initialization, Read from pitch the IMU, Send pitch to the PID Controller, and Send a PWM signal to the motors. \Hypertarget{main_8c_a70af21c671abfcc773614a9a4f63d920}\index{main.c@{main.c}!SystemClock\_Config@{SystemClock\_Config}}
+\index{SystemClock\_Config@{SystemClock\_Config}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{SystemClock\_Config()}{SystemClock\_Config()}}
+{\footnotesize\ttfamily \label{main_8c_a70af21c671abfcc773614a9a4f63d920} 
+void System\+Clock\+\_\+\+Config (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+System Clock Configuration. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+Configure the main internal regulator output voltage
+
+Initializes the RCC Oscillators according to the specified parameters in the RCC\+\_\+\+Osc\+Init\+Type\+Def structure.
+
+Initializes the CPU, AHB and APB buses clocks
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{main_8c_a1eac46702c054e129053ae4a2153e42c}\index{main.c@{main.c}!RC@{RC}}
+\index{RC@{RC}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{RC}{RC}}
+{\footnotesize\ttfamily \label{main_8c_a1eac46702c054e129053ae4a2153e42c} 
+RC\+\_\+\+Signal RC}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .tim\ =\ \&htim3,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .ch1\ =\ TIM\_CHANNEL\_1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .ch2\ =\ TIM\_CHANNEL\_2,}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}
+This is the RC object used for the RC receiver. The Receiver was used as a kill switch for this project. The trigger must be held in order for the motors to spin. 

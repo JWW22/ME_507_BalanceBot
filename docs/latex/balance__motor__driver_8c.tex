@@ -1,0 +1,94 @@
+\doxysection{Core/\+Src/balance\+\_\+motor\+\_\+driver.c File Reference}
+\hypertarget{balance__motor__driver_8c}{}\label{balance__motor__driver_8c}\index{Core/Src/balance\_motor\_driver.c@{Core/Src/balance\_motor\_driver.c}}
+
+
+\+: This driver is meant to control the motors used for balancing our bot.  
+
+
+{\ttfamily \#include $<$balance\+\_\+motor\+\_\+driver.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{balance__motor__driver_8c_a3615253926d793ff37af2017474afd44}{enable\+\_\+motor}} (motor \texorpdfstring{$\ast$}{*}p\+\_\+mot)
+\begin{DoxyCompactList}\small\item\em This function enables the motor channels to be PWM\textquotesingle{}d. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{balance__motor__driver_8c_a9f0e39fb9bf40aee32847556d3f2001a}{disable\+\_\+motor}} (motor \texorpdfstring{$\ast$}{*}p\+\_\+mot)
+\begin{DoxyCompactList}\small\item\em This function disables the motor channels. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{balance__motor__driver_8c_ae9b33ba7fb6a53267798dbaf1e2e94a6}{set\+\_\+duty\+\_\+cycle}} (motor \texorpdfstring{$\ast$}{*}p\+\_\+mot, int32\+\_\+t duty)
+\begin{DoxyCompactList}\small\item\em This function sets the duty cycle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\+: This driver is meant to control the motors used for balancing our bot. 
+
+\begin{DoxyAuthor}{Author}
+Johnathan Waldmire, Peter Tomson 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+April 25, 2024 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{balance__motor__driver_8c_a9f0e39fb9bf40aee32847556d3f2001a}\index{balance\_motor\_driver.c@{balance\_motor\_driver.c}!disable\_motor@{disable\_motor}}
+\index{disable\_motor@{disable\_motor}!balance\_motor\_driver.c@{balance\_motor\_driver.c}}
+\doxysubsubsection{\texorpdfstring{disable\_motor()}{disable\_motor()}}
+{\footnotesize\ttfamily \label{balance__motor__driver_8c_a9f0e39fb9bf40aee32847556d3f2001a} 
+void disable\+\_\+motor (\begin{DoxyParamCaption}\item[{motor \texorpdfstring{$\ast$}{*}}]{p\+\_\+mot}{}\end{DoxyParamCaption})}
+
+
+
+This function disables the motor channels. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Motor} & Pointer \\
+\hline
+\end{DoxyParams}
+\Hypertarget{balance__motor__driver_8c_a3615253926d793ff37af2017474afd44}\index{balance\_motor\_driver.c@{balance\_motor\_driver.c}!enable\_motor@{enable\_motor}}
+\index{enable\_motor@{enable\_motor}!balance\_motor\_driver.c@{balance\_motor\_driver.c}}
+\doxysubsubsection{\texorpdfstring{enable\_motor()}{enable\_motor()}}
+{\footnotesize\ttfamily \label{balance__motor__driver_8c_a3615253926d793ff37af2017474afd44} 
+void enable\+\_\+motor (\begin{DoxyParamCaption}\item[{motor \texorpdfstring{$\ast$}{*}}]{p\+\_\+mot}{}\end{DoxyParamCaption})}
+
+
+
+This function enables the motor channels to be PWM\textquotesingle{}d. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Motor} & Pointer \\
+\hline
+\end{DoxyParams}
+\Hypertarget{balance__motor__driver_8c_ae9b33ba7fb6a53267798dbaf1e2e94a6}\index{balance\_motor\_driver.c@{balance\_motor\_driver.c}!set\_duty\_cycle@{set\_duty\_cycle}}
+\index{set\_duty\_cycle@{set\_duty\_cycle}!balance\_motor\_driver.c@{balance\_motor\_driver.c}}
+\doxysubsubsection{\texorpdfstring{set\_duty\_cycle()}{set\_duty\_cycle()}}
+{\footnotesize\ttfamily \label{balance__motor__driver_8c_ae9b33ba7fb6a53267798dbaf1e2e94a6} 
+void set\+\_\+duty\+\_\+cycle (\begin{DoxyParamCaption}\item[{motor \texorpdfstring{$\ast$}{*}}]{p\+\_\+mot}{, }\item[{int32\+\_\+t}]{duty}{}\end{DoxyParamCaption})}
+
+
+
+This function sets the duty cycle. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Motor} & Pointer \\
+\hline
+\mbox{\texttt{ in}}  & {\em Duty} & Value \\
+\hline
+\end{DoxyParams}

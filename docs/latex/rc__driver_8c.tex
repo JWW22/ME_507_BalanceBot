@@ -1,0 +1,70 @@
+\doxysection{Core/\+Src/rc\+\_\+driver.c File Reference}
+\hypertarget{rc__driver_8c}{}\label{rc__driver_8c}\index{Core/Src/rc\_driver.c@{Core/Src/rc\_driver.c}}
+
+
+\+: This is a class that can be used to read a PWM signal from an RC controller.  
+
+
+{\ttfamily \#include $<$rc\+\_\+driver.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{rc__driver_8c_a184e50623dfefcf4903764d1466b989b}{RC\+\_\+callback}} (RC\+\_\+\+Signal \texorpdfstring{$\ast$}{*}p\+\_\+\+RC)
+\begin{DoxyCompactList}\small\item\em This function measures the active pulse width of the RC signal in microseconds. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{rc__driver_8c_a1cff96d0722a70ecca1c7bae49205c5c}{RC\+\_\+\+Pulse}} (RC\+\_\+\+Signal \texorpdfstring{$\ast$}{*}p\+\_\+\+RC)
+\begin{DoxyCompactList}\small\item\em This function saturates erroneous pulse width values then returns the pulse width in microseconds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\+: This is a class that can be used to read a PWM signal from an RC controller. 
+
+\begin{DoxyAuthor}{Author}
+Johnathan Waldmire, Peter Tomson 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+May 17, 2024 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{rc__driver_8c_a184e50623dfefcf4903764d1466b989b}\index{rc\_driver.c@{rc\_driver.c}!RC\_callback@{RC\_callback}}
+\index{RC\_callback@{RC\_callback}!rc\_driver.c@{rc\_driver.c}}
+\doxysubsubsection{\texorpdfstring{RC\_callback()}{RC\_callback()}}
+{\footnotesize\ttfamily \label{rc__driver_8c_a184e50623dfefcf4903764d1466b989b} 
+void RC\+\_\+callback (\begin{DoxyParamCaption}\item[{RC\+\_\+\+Signal \texorpdfstring{$\ast$}{*}}]{p\+\_\+\+RC}{}\end{DoxyParamCaption})}
+
+
+
+This function measures the active pulse width of the RC signal in microseconds. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em RC} & Receiver Pointer \\
+\hline
+\end{DoxyParams}
+\Hypertarget{rc__driver_8c_a1cff96d0722a70ecca1c7bae49205c5c}\index{rc\_driver.c@{rc\_driver.c}!RC\_Pulse@{RC\_Pulse}}
+\index{RC\_Pulse@{RC\_Pulse}!rc\_driver.c@{rc\_driver.c}}
+\doxysubsubsection{\texorpdfstring{RC\_Pulse()}{RC\_Pulse()}}
+{\footnotesize\ttfamily \label{rc__driver_8c_a1cff96d0722a70ecca1c7bae49205c5c} 
+uint32\+\_\+t RC\+\_\+\+Pulse (\begin{DoxyParamCaption}\item[{RC\+\_\+\+Signal \texorpdfstring{$\ast$}{*}}]{p\+\_\+\+RC}{}\end{DoxyParamCaption})}
+
+
+
+This function saturates erroneous pulse width values then returns the pulse width in microseconds. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em PWM} & Value \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em RC} & Receiver Pointer \\
+\hline
+\end{DoxyParams}

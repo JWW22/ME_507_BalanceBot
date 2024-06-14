@@ -1,0 +1,92 @@
+\doxysection{Core/\+Src/distance\+\_\+driver.c File Reference}
+\hypertarget{distance__driver_8c}{}\label{distance__driver_8c}\index{Core/Src/distance\_driver.c@{Core/Src/distance\_driver.c}}
+
+
+\+: This driver is meant to be used with the Adafruit US100 ultra-\/sonic distance sensor.  
+
+
+{\ttfamily \#include $<$distance\+\_\+driver.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{distance__driver_8c_a3992983828b94f64adbabdfaafaaddbc}{enable\+\_\+distance}} (\mbox{\hyperlink{main_8c_a7ae9d3ad463ec7a0eb38ee23a15c51e7}{distance}} \texorpdfstring{$\ast$}{*}p\+\_\+dis)
+\begin{DoxyCompactList}\small\item\em This function enables the US100 sensor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{distance__driver_8c_ad9df0d96d4b5290386cf1aee5dbd3350}{disable\+\_\+distance}} (\mbox{\hyperlink{main_8c_a7ae9d3ad463ec7a0eb38ee23a15c51e7}{distance}} \texorpdfstring{$\ast$}{*}p\+\_\+dis)
+\begin{DoxyCompactList}\small\item\em This function disables the US100 sensor. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{distance__driver_8c_a18da298a9997c7bb936761720e9498f4}{read\+\_\+distance}} (\mbox{\hyperlink{main_8c_a7ae9d3ad463ec7a0eb38ee23a15c51e7}{distance}} \texorpdfstring{$\ast$}{*}p\+\_\+dis)
+\begin{DoxyCompactList}\small\item\em This function returns the distance value read from the sensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\+: This driver is meant to be used with the Adafruit US100 ultra-\/sonic distance sensor. 
+
+\begin{DoxyAuthor}{Author}
+Johnathan Waldmire, Peter Tomson 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+June 3, 2024 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{distance__driver_8c_ad9df0d96d4b5290386cf1aee5dbd3350}\index{distance\_driver.c@{distance\_driver.c}!disable\_distance@{disable\_distance}}
+\index{disable\_distance@{disable\_distance}!distance\_driver.c@{distance\_driver.c}}
+\doxysubsubsection{\texorpdfstring{disable\_distance()}{disable\_distance()}}
+{\footnotesize\ttfamily \label{distance__driver_8c_ad9df0d96d4b5290386cf1aee5dbd3350} 
+void disable\+\_\+distance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{main_8c_a7ae9d3ad463ec7a0eb38ee23a15c51e7}{distance}} \texorpdfstring{$\ast$}{*}}]{p\+\_\+dis}{}\end{DoxyParamCaption})}
+
+
+
+This function disables the US100 sensor. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Distance} & sensor Pointer \\
+\hline
+\end{DoxyParams}
+\Hypertarget{distance__driver_8c_a3992983828b94f64adbabdfaafaaddbc}\index{distance\_driver.c@{distance\_driver.c}!enable\_distance@{enable\_distance}}
+\index{enable\_distance@{enable\_distance}!distance\_driver.c@{distance\_driver.c}}
+\doxysubsubsection{\texorpdfstring{enable\_distance()}{enable\_distance()}}
+{\footnotesize\ttfamily \label{distance__driver_8c_a3992983828b94f64adbabdfaafaaddbc} 
+void enable\+\_\+distance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{main_8c_a7ae9d3ad463ec7a0eb38ee23a15c51e7}{distance}} \texorpdfstring{$\ast$}{*}}]{p\+\_\+dis}{}\end{DoxyParamCaption})}
+
+
+
+This function enables the US100 sensor. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Distance} & sensor Pointer \\
+\hline
+\end{DoxyParams}
+\Hypertarget{distance__driver_8c_a18da298a9997c7bb936761720e9498f4}\index{distance\_driver.c@{distance\_driver.c}!read\_distance@{read\_distance}}
+\index{read\_distance@{read\_distance}!distance\_driver.c@{distance\_driver.c}}
+\doxysubsubsection{\texorpdfstring{read\_distance()}{read\_distance()}}
+{\footnotesize\ttfamily \label{distance__driver_8c_a18da298a9997c7bb936761720e9498f4} 
+uint16\+\_\+t read\+\_\+distance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{main_8c_a7ae9d3ad463ec7a0eb38ee23a15c51e7}{distance}} \texorpdfstring{$\ast$}{*}}]{p\+\_\+dis}{}\end{DoxyParamCaption})}
+
+
+
+This function returns the distance value read from the sensor. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em The} & distance in millimeters \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Distance} & sensor Pointer \\
+\hline
+\end{DoxyParams}

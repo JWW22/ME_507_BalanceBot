@@ -1,0 +1,77 @@
+\doxysection{Core/\+Src/pid.c File Reference}
+\hypertarget{pid_8c}{}\label{pid_8c}\index{Core/Src/pid.c@{Core/Src/pid.c}}
+
+
+\+: PID Controller Class  
+
+
+{\ttfamily \#include "{}pid.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{pid_8c_ab0aa56bc0446a8ce562753d0b1e3a561}\label{pid_8c_ab0aa56bc0446a8ce562753d0b1e3a561} 
+void {\bfseries PID\+\_\+\+Init} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID)
+\item 
+\Hypertarget{pid_8c_a61440d6beee848775daa6dda4ba001a5}\label{pid_8c_a61440d6beee848775daa6dda4ba001a5} 
+void {\bfseries PID} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID, double \texorpdfstring{$\ast$}{*}Input, double \texorpdfstring{$\ast$}{*}Output, double \texorpdfstring{$\ast$}{*}Setpoint, double Kp, double Ki, double Kd, PIDPON\+\_\+\+Type\+Def POn, PIDCD\+\_\+\+Type\+Def Controller\+Direction)
+\item 
+\Hypertarget{pid_8c_ad48c7eb25d609aba3feee6a9626beccd}\label{pid_8c_ad48c7eb25d609aba3feee6a9626beccd} 
+void {\bfseries PID2} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID, double \texorpdfstring{$\ast$}{*}Input, double \texorpdfstring{$\ast$}{*}Output, double \texorpdfstring{$\ast$}{*}Setpoint, double Kp, double Ki, double Kd, PIDCD\+\_\+\+Type\+Def Controller\+Direction)
+\item 
+\Hypertarget{pid_8c_a4f599fcbb142025c31168033a846f6e1}\label{pid_8c_a4f599fcbb142025c31168033a846f6e1} 
+uint8\+\_\+t {\bfseries PID\+\_\+\+Compute} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID)
+\item 
+\Hypertarget{pid_8c_a5519df5fea741638b2d4d425df9e2351}\label{pid_8c_a5519df5fea741638b2d4d425df9e2351} 
+void {\bfseries PID\+\_\+\+Set\+Mode} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID, PIDMode\+\_\+\+Type\+Def Mode)
+\item 
+\Hypertarget{pid_8c_a95fcb4338db480769a4ff41ff57b8710}\label{pid_8c_a95fcb4338db480769a4ff41ff57b8710} 
+PIDMode\+\_\+\+Type\+Def {\bfseries PID\+\_\+\+Get\+Mode} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID)
+\item 
+\Hypertarget{pid_8c_a707b6f4622902629e953fac49b5a791e}\label{pid_8c_a707b6f4622902629e953fac49b5a791e} 
+void {\bfseries PID\+\_\+\+Set\+Output\+Limits} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID, double Min, double Max)
+\item 
+\Hypertarget{pid_8c_a09f2add837a39da750bec8215a50cbb8}\label{pid_8c_a09f2add837a39da750bec8215a50cbb8} 
+void {\bfseries PID\+\_\+\+Set\+Tunings} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID, double Kp, double Ki, double Kd)
+\item 
+\Hypertarget{pid_8c_ad82ee80e83a5f45778945349de0f50c7}\label{pid_8c_ad82ee80e83a5f45778945349de0f50c7} 
+void {\bfseries PID\+\_\+\+Set\+Tunings2} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID, double Kp, double Ki, double Kd, PIDPON\+\_\+\+Type\+Def POn)
+\item 
+\Hypertarget{pid_8c_ab699135b4899b8633d30b2a9c71e0cf3}\label{pid_8c_ab699135b4899b8633d30b2a9c71e0cf3} 
+void {\bfseries PID\+\_\+\+Set\+Controller\+Direction} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID, PIDCD\+\_\+\+Type\+Def Direction)
+\item 
+\Hypertarget{pid_8c_af1afd24572399b83dcbbc9c6ab7d394c}\label{pid_8c_af1afd24572399b83dcbbc9c6ab7d394c} 
+PIDCD\+\_\+\+Type\+Def {\bfseries PID\+\_\+\+Get\+Direction} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID)
+\item 
+\Hypertarget{pid_8c_a3307e16d0e755be53d0e7fcb7fe78e41}\label{pid_8c_a3307e16d0e755be53d0e7fcb7fe78e41} 
+void {\bfseries PID\+\_\+\+Set\+Sample\+Time} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID, int32\+\_\+t New\+Sample\+Time)
+\item 
+\Hypertarget{pid_8c_a7a29b3da7225bf296b16673fa450d4bd}\label{pid_8c_a7a29b3da7225bf296b16673fa450d4bd} 
+double {\bfseries PID\+\_\+\+Get\+Kp} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID)
+\item 
+\Hypertarget{pid_8c_aa9f94b24dc46fa11dd6e01461a662da6}\label{pid_8c_aa9f94b24dc46fa11dd6e01461a662da6} 
+double {\bfseries PID\+\_\+\+Get\+Ki} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID)
+\item 
+\Hypertarget{pid_8c_ab76395d7b25ca17229bb4e0c460e5896}\label{pid_8c_ab76395d7b25ca17229bb4e0c460e5896} 
+double {\bfseries PID\+\_\+\+Get\+Kd} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID)
+\item 
+\Hypertarget{pid_8c_aca19818bf46c66f5890627d2d3a96094}\label{pid_8c_aca19818bf46c66f5890627d2d3a96094} 
+void {\bfseries PID\+\_\+\+Change\+\_\+\+Setpoint} (PID\+\_\+\+Type\+Def \texorpdfstring{$\ast$}{*}u\+PID, double \texorpdfstring{$\ast$}{*}new\+\_\+set)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\+: PID Controller Class 
+
+\DoxyHorRuler{0}
+
+
+\begin{DoxyAuthor}{Author}
+\+: Majid Derhambakhsh 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+\+: 02/11/2021 03\+:43\+:00 AM 
+\end{DoxyDate}
+\begin{DoxyNote}{Note}
+Version\+: V1.\+0.\+0 Support\+: E-\/\+Mail \+: \href{mailto:Majid.do16@gmail.com}{\texttt{ Majid.\+do16@gmail.\+com}} (subject \+: Embedded Library Support)
+\end{DoxyNote}
+Github \+: \href{https://github.com/Majid-Derhambakhsh}{\texttt{ https\+://github.\+com/\+Majid-\/\+Derhambakhsh}} 

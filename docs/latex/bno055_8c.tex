@@ -1,0 +1,128 @@
+\doxysection{Core/\+Src/bno055.c File Reference}
+\hypertarget{bno055_8c}{}\label{bno055_8c}\index{Core/Src/bno055.c@{Core/Src/bno055.c}}
+
+
+\+: This driver is meant to control the IMU.  
+
+
+{\ttfamily \#include "{}bno055.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{bno055_8c_a3db6ec21eff1c67b424f945f08d5a908}\label{bno055_8c_a3db6ec21eff1c67b424f945f08d5a908} 
+void {\bfseries bno055\+\_\+set\+Page} (uint8\+\_\+t page)
+\item 
+\Hypertarget{bno055_8c_abc45f1152dc636187f9ff8e4e9ab3d50}\label{bno055_8c_abc45f1152dc636187f9ff8e4e9ab3d50} 
+bno055\+\_\+opmode\+\_\+t {\bfseries bno055\+\_\+get\+Operation\+Mode} ()
+\item 
+\Hypertarget{bno055_8c_aeb2ad3d63c946237008dd045511448cc}\label{bno055_8c_aeb2ad3d63c946237008dd045511448cc} 
+void {\bfseries bno055\+\_\+set\+Operation\+Mode} (bno055\+\_\+opmode\+\_\+t mode)
+\item 
+\Hypertarget{bno055_8c_a850562065f5f69da02cb02fc1a17846a}\label{bno055_8c_a850562065f5f69da02cb02fc1a17846a} 
+void {\bfseries bno055\+\_\+set\+Operation\+Mode\+Config} ()
+\item 
+\Hypertarget{bno055_8c_ada49bbadf03c049ccdd256525378e50e}\label{bno055_8c_ada49bbadf03c049ccdd256525378e50e} 
+void {\bfseries bno055\+\_\+set\+Operation\+Mode\+NDOF} ()
+\item 
+\Hypertarget{bno055_8c_aa7c98bd54e392b3dadc145451958f02d}\label{bno055_8c_aa7c98bd54e392b3dadc145451958f02d} 
+void {\bfseries bno055\+\_\+set\+External\+Crystal\+Use} (bool state)
+\item 
+\Hypertarget{bno055_8c_ad433694d9d3bffe1de0d2dfa80f5060c}\label{bno055_8c_ad433694d9d3bffe1de0d2dfa80f5060c} 
+void {\bfseries bno055\+\_\+enable\+External\+Crystal} ()
+\item 
+\Hypertarget{bno055_8c_aba6b89e44fe2adc6be7841a6c9d0b32a}\label{bno055_8c_aba6b89e44fe2adc6be7841a6c9d0b32a} 
+void {\bfseries bno055\+\_\+disable\+External\+Crystal} ()
+\item 
+\Hypertarget{bno055_8c_a898eb88c0ea93f37e1a57816ac13325b}\label{bno055_8c_a898eb88c0ea93f37e1a57816ac13325b} 
+void {\bfseries bno055\+\_\+reset} ()
+\item 
+\Hypertarget{bno055_8c_ab0ccd85ef6c7251bd2128852509deebd}\label{bno055_8c_ab0ccd85ef6c7251bd2128852509deebd} 
+int8\+\_\+t {\bfseries bno055\+\_\+get\+Temp} ()
+\item 
+\Hypertarget{bno055_8c_aeae2dd7e6d93be27b077a313bb0acb7c}\label{bno055_8c_aeae2dd7e6d93be27b077a313bb0acb7c} 
+void {\bfseries bno055\+\_\+setup} ()
+\item 
+\Hypertarget{bno055_8c_aeb37e65d5767e269c9c7b7139a9c5973}\label{bno055_8c_aeb37e65d5767e269c9c7b7139a9c5973} 
+int16\+\_\+t {\bfseries bno055\+\_\+get\+SWRevision} ()
+\item 
+\Hypertarget{bno055_8c_a2222fbd108614de296f19aba738ee376}\label{bno055_8c_a2222fbd108614de296f19aba738ee376} 
+uint8\+\_\+t {\bfseries bno055\+\_\+get\+Bootloader\+Revision} ()
+\item 
+\Hypertarget{bno055_8c_a9f31a355fa89cbdf32bffd6167ee74ed}\label{bno055_8c_a9f31a355fa89cbdf32bffd6167ee74ed} 
+uint8\+\_\+t {\bfseries bno055\+\_\+get\+System\+Status} ()
+\item 
+\Hypertarget{bno055_8c_a17b64877741f390905aab70a7f9929af}\label{bno055_8c_a17b64877741f390905aab70a7f9929af} 
+bno055\+\_\+self\+\_\+test\+\_\+result\+\_\+t {\bfseries bno055\+\_\+get\+Self\+Test\+Result} ()
+\item 
+\Hypertarget{bno055_8c_afae8714d24b5ea01f7205de5da9e560f}\label{bno055_8c_afae8714d24b5ea01f7205de5da9e560f} 
+uint8\+\_\+t {\bfseries bno055\+\_\+get\+System\+Error} ()
+\item 
+\Hypertarget{bno055_8c_a962dc401248b3e8faf1e63ca27c025eb}\label{bno055_8c_a962dc401248b3e8faf1e63ca27c025eb} 
+bno055\+\_\+calibration\+\_\+state\+\_\+t {\bfseries bno055\+\_\+get\+Calibration\+State} ()
+\item 
+\Hypertarget{bno055_8c_ad81b44a9665ce2b0f4788c068f5cfcfd}\label{bno055_8c_ad81b44a9665ce2b0f4788c068f5cfcfd} 
+bno055\+\_\+calibration\+\_\+data\+\_\+t {\bfseries bno055\+\_\+get\+Calibration\+Data} ()
+\item 
+\Hypertarget{bno055_8c_a26997c3ef0fd0058ab2b63d5408cf9f1}\label{bno055_8c_a26997c3ef0fd0058ab2b63d5408cf9f1} 
+void {\bfseries bno055\+\_\+set\+Calibration\+Data} (bno055\+\_\+calibration\+\_\+data\+\_\+t cal\+Data)
+\item 
+\Hypertarget{bno055_8c_a74e0ecc5ddc91ffa5b4514ddc0b8b2d0}\label{bno055_8c_a74e0ecc5ddc91ffa5b4514ddc0b8b2d0} 
+bno055\+\_\+vector\+\_\+t {\bfseries bno055\+\_\+get\+Vector} (uint8\+\_\+t vec)
+\item 
+\Hypertarget{bno055_8c_a0fe1853726a2994013bd95620fb57228}\label{bno055_8c_a0fe1853726a2994013bd95620fb57228} 
+bno055\+\_\+vector\+\_\+t {\bfseries bno055\+\_\+get\+Vector\+Accelerometer} ()
+\item 
+\Hypertarget{bno055_8c_adcc793f3bbaeb417b4f5c251d90c6e5f}\label{bno055_8c_adcc793f3bbaeb417b4f5c251d90c6e5f} 
+bno055\+\_\+vector\+\_\+t {\bfseries bno055\+\_\+get\+Vector\+Magnetometer} ()
+\item 
+\Hypertarget{bno055_8c_a348d5e5085c136488ae330bf6e6449fc}\label{bno055_8c_a348d5e5085c136488ae330bf6e6449fc} 
+bno055\+\_\+vector\+\_\+t {\bfseries bno055\+\_\+get\+Vector\+Gyroscope} ()
+\item 
+\Hypertarget{bno055_8c_ae909f62dee3f40406a99d684af982ff5}\label{bno055_8c_ae909f62dee3f40406a99d684af982ff5} 
+bno055\+\_\+vector\+\_\+t {\bfseries bno055\+\_\+get\+Vector\+Euler} ()
+\item 
+\Hypertarget{bno055_8c_ad78e6b5cddeb730bc9852fb73482b315}\label{bno055_8c_ad78e6b5cddeb730bc9852fb73482b315} 
+bno055\+\_\+vector\+\_\+t {\bfseries bno055\+\_\+get\+Vector\+Linear\+Accel} ()
+\item 
+\Hypertarget{bno055_8c_a5f2602d237a162fb2a9dd9321926d8c5}\label{bno055_8c_a5f2602d237a162fb2a9dd9321926d8c5} 
+bno055\+\_\+vector\+\_\+t {\bfseries bno055\+\_\+get\+Vector\+Gravity} ()
+\item 
+\Hypertarget{bno055_8c_a422815acd22b611df89605ef94085afa}\label{bno055_8c_a422815acd22b611df89605ef94085afa} 
+bno055\+\_\+vector\+\_\+t {\bfseries bno055\+\_\+get\+Vector\+Quaternion} ()
+\item 
+\Hypertarget{bno055_8c_aa2375497ac5c645584531405773cfd46}\label{bno055_8c_aa2375497ac5c645584531405773cfd46} 
+void {\bfseries bno055\+\_\+set\+Axis\+Map} (bno055\+\_\+axis\+\_\+map\+\_\+t axis)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{bno055_8c_a26c3030f8b2acd651845ebcf98a4ccd6}\label{bno055_8c_a26c3030f8b2acd651845ebcf98a4ccd6} 
+uint16\+\_\+t {\bfseries accel\+Scale} = 100
+\item 
+\Hypertarget{bno055_8c_aecca0adc98950a3ffd0e39c91b437d7d}\label{bno055_8c_aecca0adc98950a3ffd0e39c91b437d7d} 
+uint16\+\_\+t {\bfseries temp\+Scale} = 1
+\item 
+\Hypertarget{bno055_8c_ae08d6bab09bbad2742ae8fa58d593fd9}\label{bno055_8c_ae08d6bab09bbad2742ae8fa58d593fd9} 
+uint16\+\_\+t {\bfseries angular\+Rate\+Scale} = 16
+\item 
+\Hypertarget{bno055_8c_aec7d4dce5e083ef2ae64f092ffa56aef}\label{bno055_8c_aec7d4dce5e083ef2ae64f092ffa56aef} 
+uint16\+\_\+t {\bfseries euler\+Scale} = 16
+\item 
+\Hypertarget{bno055_8c_a29812b3a8fbddc6f34436791611bd908}\label{bno055_8c_a29812b3a8fbddc6f34436791611bd908} 
+uint16\+\_\+t {\bfseries mag\+Scale} = 16
+\item 
+\Hypertarget{bno055_8c_a8ed9dd5cf24ef652ad066f0fcfcfe21f}\label{bno055_8c_a8ed9dd5cf24ef652ad066f0fcfcfe21f} 
+uint16\+\_\+t {\bfseries qua\+Scale} = (1$<$$<$14)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\+: This driver is meant to control the IMU. 
+
+\begin{DoxyAuthor}{Author}
+Johnathan Waldmire, Peter Tomson 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+June 14, 2024 
+\end{DoxyDate}
